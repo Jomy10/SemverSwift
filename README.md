@@ -1,5 +1,7 @@
 # Semver
 
+![version](https://img.shields.io/github/v/release/jomy10/SemverSwift?style=for-the-badge)
+
 A package for parsing and evaluating semantic versioning in Swift.
 
 This is a binding to [semver](https://docs.rs/semver/latest/semver/index.html), which uses Cargo's flavor of semantic versioning. See [semver's README](https://github.com/dtolnay/semver/blob/master/README.md#scope-of-this-crate) for more information.
