@@ -17,7 +17,7 @@ then
 
   swift-bridge-cli create-package \
     --bridges-dir ./generated \
-    --out-dir ../SemverSwiftBridge \
+    --out-dir ../../SemverSwiftBridge \
     --macos target/x86_64-apple-darwin/release/libsemver_swift_bridge.a \
     --ios target/aarch64-apple-ios/release/libsemver_swift_bridge.a \
     --simulator target/x86_64-apple-ios/release/libsemver_swift_bridge.a \
@@ -27,7 +27,7 @@ else
 
   swift-bridge-cli create-package \
     --bridges-dir ./generated \
-    --out-dir ../SemverSwiftBridge \
+    --out-dir ../../SemverSwiftBridge \
     --macos target/x86_64-apple-darwin/debug/libsemver_swift_bridge.a \
     --name SemverBridge
 fi
