@@ -102,7 +102,7 @@ final class VersionReqTests: XCTestCase {
         XCTAssertFalse(versionReq.matches(version: versionOut))
     }
 
-    func testDocStarMatch() throws {
+    func testDocStarMatch() throws {    
         let versionReq = try VersionReq.parse("*").get()
         let otherVersionReq = VersionReq.STAR
 
@@ -125,6 +125,13 @@ final class VersionReqTests: XCTestCase {
 
         XCTAssertFalse(
             versionReq.matches(version: lowerVersion)
-)
+        )
+    }
+
+    func testToString() throws {
+        let string = ">=1.5.6"
+        let version = try VersionReq.parse(string).get()
+
+        XCTAssertEqual(string, version.toString())
     }
 }

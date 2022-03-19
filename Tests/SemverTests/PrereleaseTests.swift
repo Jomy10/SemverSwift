@@ -2,16 +2,16 @@ import XCTest
 @testable import Semver
 
 final class PrereleaseTests: XCTestCase {
-    // func testgetEmpty() {
-    //     XCTAssertEqual("", Prerelease.getEmty())
-    // }
-    // func testToString() {
-    //     print("Starting")
-    //     let pre = Prerelease("alpha.1")
-    //     print("pre", pre)
-    //     let s = pre.toString()
-    //     print("pre string", s)
+    func testgetEmpty() {
+        XCTAssert(Prerelease.EMPTY.isEmpty())
+    }
+    func testgetEmptyToString() {
+        XCTAssertEqual("", Prerelease.EMPTY.toString())
+    }
+    func testToString() throws {
+        let pre = try Prerelease.parse("alpha.1").get()
+        let s = pre.toString()
 
-    //     XCTAssertEqual("alpha.1", s)
-    // }
+        XCTAssertEqual("alpha.1", s)
+    }
 }

@@ -3,6 +3,7 @@ import SemverBridge
 @_exported import class SemverBridge.Prerelease
 @_exported import class SemverBridge.VersionReq
 @_exported import class SemverBridge.BuildMetadata
+@_exported import enum SemverBridge.Operator
 
 /// **SemVer version** as defined by <https://semver.org>.
 ///
@@ -71,17 +72,14 @@ public struct Version {
         set(val) {self._version.set_patch(val)}
     }
 
-    /// Create ``Version`` with an empty pre-release and build metadata.
-    public init(major: UInt64, minor: UInt64, patch: UInt64) {
-        self._version = _Version(major, minor, patch)
+    public var pre: Prerelease {
+        get { self._version.get_pre() }
+        set(val) { self._version.set_pre(val) }
     }
 
-    // TODO
-    // public init(major: UInt64, minor: UInt64, patch: UInt64, pre: Prerelease, build: BuildMetadatata) {}
-
-    @available(*, deprecated, message: "Causes undefined behaviour")
-    private init(version: _VersionRefMut) {
-        self._version = version
+    /// Create ``Version`` with an empty pre-release and build metadata.
+    public init(major: UInt64, minor: UInt64, patch: UInt64, pre: Prerelease? = nil, build: BuildMetadata? = nil) {
+        self._version = _Version(major, minor, patch, pre, build)
     }
 
     /// Create `Version` by parsing from string representation.
@@ -115,8 +113,10 @@ public struct Version {
             let major = result.get_major()
             let minor = result.get_minor()
             let patch = result.get_patch()
+            let pre = result.get_pre()
+            let build = result.get_build()
 
-            let version = Version(major: major, minor: minor, patch: patch)
+            let version = Version(major: major, minor: minor, patch: patch, pre: pre, build: build)
             return Result.success(version)
         } else {
             return Result.failure(ParseError(description: version_result.get_error_unsafe().toString()))
@@ -134,6 +134,29 @@ extension Version: Comparable {
     }
 }
 
+extension Version: CustomStringConvertible {
+    // TODO: update with Prerelease and Buildmetadata
+    public var description: String {
+        print("self._version:", self._version, "-", self._version.to_string(), "-", self._version.to_string().toString())
+        return self._version.to_string().toString()
+    }
+
+    /// Convert ``Version`` to a `String`
+    /// 
+    /// **Example**
+    /// ```swift
+    /// let string = "5.6.7"
+    /// let version = try Version.parse(string).get()
+    /// 
+    /// XCTAssertEqual(string, version.toString())
+    /// ```
+    public func toString() -> String {
+        self.description
+    }
+}
+
+// TODO: toString for Version
+
 /// Error parsing a SemVer version or version requirement.
 public struct ParseError: Swift.Error {
     var description: String
@@ -148,11 +171,40 @@ extension Prerelease {
         self.description
     }
 
-    public class func getEmpty() -> Prerelease {
-        return empty_prerelease();
+    /// An empty Prerelease
+    public static var EMPTY: Prerelease {
+        get {
+            return empty_prerelease()
+        }
+    }
+
+    public func isEmpty() -> Bool {
+        self.is_empty()
+    }
+
+    public static func parse(_ text: String) -> Result<Prerelease, ParseError> {
+        let pre = new_prerelease(text)
+        if pre.is_ok() {
+            return .success(pre.unwrap_unchecked_owned())
+        } else {
+            return .failure(ParseError(description: pre.unwrap_err_unchecked_to_string().toString()))
+        }
+    }
+
+    var count: Int {
+        Int(self.len())
     }
 }
 
+extension Prerelease: Comparable {
+    public static func == (lhs: Prerelease, rhs: Prerelease) -> Bool {
+        lhs.eq(rhs)
+    }
+
+    public static func < (lhs: Prerelease, rhs: Prerelease) -> Bool {
+        lhs.lt(rhs)
+    }
+}
 
 extension VersionReq {
     // TODO: pubvar comparator
@@ -181,8 +233,8 @@ extension VersionReq {
         version_req_matches(self, version._version)
     }
 
-    /// Use ``VersionReq/parse`` instead
-    @available(_PackageDescription, deprecated: 1.0.0, obsoleted: 1.1.0, message: "Causes undefined behaviour. Use `parse` instead")
+    /// Use ``parse`` instead
+    @available(_PackageDescription, deprecated: 1.0.0, obsoleted: 1.1.0, message: "Causes undefined behaviour. Use `parse` instead.")
     public static func parse_ref_mut(_ text: String) -> Result<VersionReqRefMut, ParseError> {
         let req = parse_version_req(text)
 

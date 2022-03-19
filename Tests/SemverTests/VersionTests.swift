@@ -68,6 +68,12 @@ final class VersionTests: XCTestCase {
         
         XCTAssertEqual(patch, version.patch)
     }
+    func testGetPre() throws {
+        let pre = try Prerelease.parse("alpha.4").get()
+        let version = try Version.parse("1.0.4-alpha.4").get()
+
+        XCTAssertEqual(pre, version.pre)
+    }
 
     func testSetMajor() {
         var version = Version(major: 10, minor: 1, patch: 1)
@@ -87,11 +93,25 @@ final class VersionTests: XCTestCase {
         
         XCTAssertEqual(11, version.patch)
     }
+    func testSetPre() throws {
+        let pre = try Prerelease.parse("beta.2").get()
+        var version = try Version.parse("1.0.4-alpha.1").get()
+        version.pre = pre
+
+        XCTAssertEqual(pre, version.pre)
+    }
 
     func testDocCreateAndParse() throws {
         let version = Version(major: 1, minor: 0, patch: 3)
         let versionParsed = try Version.parse("1.0.3").get()
 
         XCTAssertEqual(version, versionParsed)
+    }
+
+    func testToString() throws {
+        let string = "1.5.6"
+        let version = try Version.parse(string).get()
+
+        XCTAssertEqual(string, version.toString())
     }
 }
