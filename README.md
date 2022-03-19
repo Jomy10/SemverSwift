@@ -113,7 +113,7 @@ there is no official support for the other Apple platforms yet however.
 
 ## Project structure
 
-### `[SemverRustBridge](SemverRustBridge)/src`
+### [SemverRustBridge](SemverRustBridge)
 This directory contains the Rust source files that bridge the Rust `semver` package to Swift using `swift-bridge`.
 
 ### [`SemverSwiftBridge`](SemverSwiftBridge)

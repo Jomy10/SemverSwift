@@ -10,7 +10,7 @@ let package = Package(
             targets: ["Semver"]),
     ],
     dependencies: [
-        .package(path: "SemverSwiftBridge")
+        .package(path: "./SemverSwiftBridge")
     ],
     targets: [
         .target(
