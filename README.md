@@ -1,6 +1,7 @@
 # Semver
 
 ![version](https://img.shields.io/github/v/release/jomy10/SemverSwift?style=for-the-badge)
+![tests](https://img.shields.io/github/workflow/status/jomy10/SemverSwift/Swift?label=Tests&logo=Swift&style=for-the-badge)
 
 A package for parsing and evaluating semantic versioning in Swift.
 
