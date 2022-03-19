@@ -1,0 +1,9 @@
+**/.idea
+**/.vscode
+**/.swiftpm
+**/.build
+**/.DS_Store
+**/*.lock
+/rust-src-semver
+/generated
+/target
