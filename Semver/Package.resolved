@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SemverBridge",
+        "repositoryURL": "https://github.com/Jomy10/SemverBridge",
+        "state": {
+          "branch": "master",
+          "revision": "4474a82926d940c09d1756922ef5de75c64fe515",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

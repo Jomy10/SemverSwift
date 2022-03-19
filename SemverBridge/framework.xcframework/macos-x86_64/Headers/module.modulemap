@@ -1,5 +1,0 @@
-module Framework {
-    header "SwiftBridgeCore.h"
-    header "semver-swift-bridge.h"
-    export *
-}
