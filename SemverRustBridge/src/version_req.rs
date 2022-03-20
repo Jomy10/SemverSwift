@@ -1,6 +1,5 @@
 use semver::*;
 use crate::_Version;
-use crate::bridge_result::BridgeResult;
 
 pub struct _VersionReqResult {
     version: Option<VersionReq>,

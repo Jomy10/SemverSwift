@@ -1,6 +1,5 @@
 use std::cmp::Ordering;
 use semver::*;
-use crate::bridge_result::BridgeResult;
 
 /// bridging struct between Rust `Version` and Swift `Version`
 pub struct _Version {

@@ -4,6 +4,7 @@ import SemverBridge
 @_exported import class SemverBridge.VersionReq
 @_exported import class SemverBridge.BuildMetadata
 @_exported import enum SemverBridge.Operator
+@_exported import class SemverBridge.Comparator
 
 /// **SemVer version** as defined by <https://semver.org>.
 ///
@@ -290,3 +291,46 @@ extension VersionReq: Equatable {
         version_req_eq(lhs, rhs)
     }
 }
+
+extension Comparator {
+    public var op: Operator {
+        get { self.getOperator() }
+        set(val) { self.setOperator(val) }
+    }
+    public var major: UInt64 {
+        get { self.getMajor() }
+        set(val) { self.setMajor(val) }
+    }
+    public var minor: Optional<UInt64> {
+        get { self.getMinor() }
+        set(val) { self.setMinor(val) }
+    }
+    public var patch: Optional<UInt64> {
+        get { self.getPatch() }
+        set(val) { self.setPatch(val) }
+    }
+    public var pre: Prerelease {
+        get { self.getPre() }
+        set(val) { self.setPre(val) }
+    }
+
+    public static func parse(_ text: String) -> Result<Comparator, ParseError> {
+        let result = parse_comparator(text);
+        if result.is_ok() {
+            return .success(result.unwrap_unsafe())
+        } else {
+            return .failure(ParseError(description: result.unwrap_err_unsafe().toString()))
+        }
+    }
+
+    public func matches(version: Version) -> Bool {
+        comparator_matches(self, version._version)
+    }
+}
+
+extension Comparator: CustomStringConvertible {
+    public var description: String {
+        self.toRustString().toString()
+    } 
+}
+
