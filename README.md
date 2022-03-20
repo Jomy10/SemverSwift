@@ -154,7 +154,7 @@ To build a debug version for *macOS*, run:
 
 ```bash
 ./build.sh
-// or
+# or
 ./build.sh DEBUG
 ```
 
@@ -173,9 +173,7 @@ This project will follow updates of [semver](https://docs.rs/semver/latest/semve
 
 A number of features are currently unimplemented and are planned to be implemented soon (help is appreciated).
 
-- `Prerelease`
 - `BuildMetadata`
-- A number of minor methods on `Version`
 
 ## Contributing
 
