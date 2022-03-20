@@ -11,16 +11,16 @@ let package = Package(
     ],
     dependencies: [
         // DEBUG:
-        .package(path: "../SemverSwiftBridge")
-        // .package(url: "https://github.com/Jomy10/SemverBridge", branch: "master")
+        // .package(path: "../SemverSwiftBridge")
+        .package(url: "https://github.com/Jomy10/SemverBridge", branch: "master")
     ],
     targets: [
         .target(
             name: "Semver",
             dependencies: [
                 // DEBUG:
-                .product(name: "SemverBridge", package: "SemverSwiftBridge")
-                // .product(name: "SemverBridge", package: "SemverBridge")
+                // .product(name: "SemverBridge", package: "SemverSwiftBridge")
+                .product(name: "SemverBridge", package: "SemverBridge")
             ]),
         .testTarget(
             name: "SemverTests",
